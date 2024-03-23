@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng dữ liệu</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="expense.js"></script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #F2F2F2;
+        }
+        select {
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<form>
+    <div>
+        <label>Amount</label>
+        <input type="text" name="amount" id="amount" placeholder=""/>
+    </div>
+    <div>
+        <label>category</label>
+        <select id="category"></select>
+    </div>
+    <div>
+        <label>walletDetails</label>
+        <select id="walletdetails"></select>
+    </div>
+    <div>
+        <label>Note</label>
+        <input type="text" name="note" id="note" placeholder=""/>
+    </div>
+    <button type="submit" value="create" onclick="createNewCustomer()">create</button>
+</form>
+<h2>Dữ liệu sản phẩm</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Amount</th>
+        <th>id category</th>
+        <th>id_walletDetails</th>
+        <th>note</th>
+        <th>time now</th>
+        <th>user_id</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody id="content">
+    </tbody>
+</table>
+</body>
+</html>
