@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bảng dữ liệu</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="expense.js"></script>
+    <script src="script.js"></script>
     <style>
         table {
             width: 100%;
@@ -28,16 +28,8 @@
 <body>
 <form>
     <div>
-        <label>Amount</label>
-        <input type="text" name="amount" id="amount" placeholder=""/>
-    </div>
-    <div>
-        <label>category</label>
-        <select id="category"></select>
-    </div>
-    <div>
-        <label>walletDetails</label>
-        <select id="walletdetails"></select>
+        <label>Name Wallet</label>
+        <input type="text" name="name_wallet" id="name_wallet" placeholder=""/>
     </div>
     <div>
         <label>Note</label>
@@ -50,17 +42,13 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th>Amount</th>
-        <th>id category</th>
-        <th>id_walletDetails</th>
+        <th>name wallet</th>
         <th>note</th>
-        <th>time now</th>
-        <th>user_id</th>
         <th>Update</th>
         <th>Delete</th>
     </tr>
     </thead>
-    <tbody id="content">
+    <tbody id="content1">
     </tbody>
 </table>
 </body>
