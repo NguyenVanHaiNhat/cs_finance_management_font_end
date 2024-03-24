@@ -1,4 +1,5 @@
-function showAllExpense(){
+const TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuaGF0IiwiaWF0IjoxNzExMjg3NTM3LCJleHAiOjE3MTEzMjM1Mzd9.cUAuxNl93sJ_ssE4eLc-BDeJsqyeq5EuCOVTmrb_Eoo"
+function showAllWallet(){
     let ob = getKeyLocalStorage();
     if (ob != null){
         let token = ob.token;
@@ -7,18 +8,18 @@ function showAllExpense(){
         headers:{
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            "Authorization": "Bearer " + "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaGFwIiwiaWF0IjoxNzExMDk4OTE1LCJleHAiOjE3MTExMzQ5MTV9.u4iFvbd79tmW2yPypUIw-kWpv-IF9cwUHpKEYqjXAqU"
+            "Authorization": "Bearer " + TOKEN
         },
         crossDomain: true,
         type:"GET",
-        url: "http://localhost:8080/api/expense",
+        url: "http://localhost:8080/api/wallets",
         success: function (data){
             const arr = data.content;
             content = "";
             for (let i = 0; i < arr.length; i++) {
-                content+=getExpense(arr[i])
+                content+=getWallet(arr[i])
             }
-            document.getElementById("content").innerHTML= content;
+            document.getElementById("content1").innerHTML= content;
         }
     })
 }
@@ -27,92 +28,97 @@ function getKeyLocalStorage(){
     return a;
 }
 getKeyLocalStorage();
-showAllExpense();
-function getExpense(expense){
-    console.log(expense);
+showAllWallet();
+function getWallet(wallet){
+    console.log(wallet);
     return `<tr>
-<td>${expense.id}</td>
-<td>${expense.amount}</td>
-<td>${expense.category.name_category}</td>
-<td>${expense.walletdetails.wallet.name_wallet}</td>
-<td>${expense.note}</td>
-<td>${expense.time_now}</td>
-<td>${expense.users.id}</td>
-<td class="btn"><button class="createNewCustomer" onclick="createNewCustomer(${expense.id})">Update</button></td>
+<td>${wallet.id}</td>
+<td>${wallet.name_wallet}</td>
+<td>${wallet.note}</td>
+<td><button type="button" class="btn btn-primary update-btn" data-wallet-id="${wallet.id}" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Update
+            </button></td>
+<td><button type="button" class="btn btn-primary delete-btn" data-wallet-id="${wallet.id}" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+                Delete
+            </button></td>
 </tr>
 `
 }
-$(document).ready(function() {
-    $.ajax({
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            "Authorization": "Bearer " + "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaGFwIiwiaWF0IjoxNzExMDk4OTE1LCJleHAiOjE3MTExMzQ5MTV9.u4iFvbd79tmW2yPypUIw-kWpv-IF9cwUHpKEYqjXAqU"
-        },
-        type: "get",
-        url: "http://www.localhost:8080/api/category/list",
-        success: function(categorsys) {
-            console.log(categorsys);
-            let select = document.getElementById("category");
-            let option;
-            for(let category of categorsys) {
-                option = document.createElement("option");
-                option.text = category.name_category;
-                option.value = category.id;
-                select.appendChild(option)
-            }
-        }
-    })
-})
-$(document).ready(function() {
-    $.ajax({
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            "Authorization": "Bearer " + "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaGFwIiwiaWF0IjoxNzExMDk4OTE1LCJleHAiOjE3MTExMzQ5MTV9.u4iFvbd79tmW2yPypUIw-kWpv-IF9cwUHpKEYqjXAqU"
-        },
-        type: "get",
-        url: "http://www.localhost:8080/api/walletdetails/list",
-        success: function(walletdetailss) {
-            let select = document.getElementById("walletdetails");
-            let option;
-            for(let walletdetails of walletdetailss) {
-                option = document.createElement("option");
-                option.text = walletdetails.wallet.name_wallet;
-                option.value = walletdetails.id;
-                select.appendChild(option)
-            }
-        }
-    })
-})
-function createNewCustomer(){
-    // chan su kien mac dinh
+function createNewWallet(){
     event.preventDefault();
-    // lay du lieu
-    // chuyen thanh object
-    let newExpense = {
-        "amount": document.getElementById("amount").value,
-        "category" : {
-            "id":document.getElementById("category").value
-        },
-        "walletdetails" : {
-            "id":document.getElementById("walletdetails").value
-        },
+    let newWallet = {
+        "name_wallet": document.getElementById("name_wallet").value,
         "note":  document.getElementById("note").value,
     }
-    console.log(JSON.stringify(newExpense));
+    console.log(JSON.stringify(newWallet));
     $.ajax({
         headers :{
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            "Authorization": "Bearer " + "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaGFwIiwiaWF0IjoxNzExMDk4OTE1LCJleHAiOjE3MTExMzQ5MTV9.u4iFvbd79tmW2yPypUIw-kWpv-IF9cwUHpKEYqjXAqU"
+            "Authorization": "Bearer " + TOKEN
         },
         type: "POST",
-        url: "http://localhost:8080/api/expense",
-        data: JSON.stringify(newExpense),
+        url: "http://localhost:8080/api/wallets",
+        data: JSON.stringify(newWallet),
         success: function(){
             console.log("abc")
-            showAllExpense();
+            showAllWallet();
         }
     })
+}
+
+function deleteWallet() {
+    let walletId = document.getElementById("updateWalletId").value; // Lấy ID của ví cần cập nhật
+    $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + TOKEN
+            },
+            type: "DELETE",
+            url: "http://localhost:8080/api/wallets/" + walletId,
+            success: function() {
+                console.log("Wallet deleted successfully");
+                showAllWallet();
+            },
+            error: function(xhr, status, error) {
+                console.error("Error deleting wallet:", error);
+            }
+        });
+}
+document.addEventListener("click", function(event) {
+    if (event.target.classList.contains("update-btn") || event.target.classList.contains("delete-btn")) {
+        let walletId = event.target.getAttribute("data-wallet-id");
+        console.log("Update wallet with ID:", walletId);
+        // Đặt giá trị của ID vào trường ẩn trong modal
+        document.getElementById("updateWalletId").value = walletId;
+        document.getElementById("DeleteWalletId").value = walletId;
+    }
+});
+
+function updateWallet() {
+    event.preventDefault();
+    let walletId = document.getElementById("updateWalletId").value; // Lấy ID của ví cần cập nhật
+    let updatedWallet = {
+        "name_wallet": document.getElementById("updateName").value,
+        "note": document.getElementById("updateNote").value
+    };
+    console.log(JSON.stringify(updatedWallet));
+    $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer " + TOKEN
+        },
+        type: "PUT",
+        url: "http://localhost:8080/api/wallets/" + walletId, // Sử dụng ID để xác định ví cần cập nhật
+        data: JSON.stringify(updatedWallet),
+        success: function() {
+            console.log("Wallet updated successfully");
+            showAllWallet();
+        },
+        error: function(xhr, status, error) {
+            console.error("Error updating wallet:", error);
+        }
+    });
 }
