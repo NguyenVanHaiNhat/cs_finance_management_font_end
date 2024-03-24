@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/user/form/form.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <title>Form login</title>
+</head>
+<body>
+<div class="container" id="container">
+    <div class="form-container sign-up-container">
+        <form onsubmit="return validateForm()" id="register">
+            <h1>Create Account</h1>
+            <div class="social-container">
+                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+            </div>
+            <span>or use your email for registration</span>
+            <input id="username1" placeholder="Username" maxlength="32" type="text" required/>
+            <span id="username_error" style="color: red;"></span>
+            <input id="password1" type="password" placeholder="Password" required />
+            <span id="password_error" style="color: red;"></span>
+            <input id="first_name" type="text" placeholder="First Name" required/>
+            <span id="firstname_error" style="color: red;"></span>
+            <input id="last_name" type="text" placeholder="Last Name" required/>
+            <span id="last_name_error" style="color: red;"></span>
+            <input id="gender" type="text" placeholder="Gender" required/>
+            <span id="gender_error" style="color: red;"></span>
+            <input id="email" type="email" placeholder="Email" required/>
+            <input id="age" type="number" placeholder="Age" required/>
+            <input id="phone" type="text" placeholder="Phone" required/>
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+    <div class="form-container sign-in-container">
+        <form id="form-login">
+            <h1>Sign in</h1>
+            <div class="social-container">
+                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+            </div>
+            <span>or use your account</span>
+            <input id="username" type="text" placeholder="Username" />
+            <input id="password" type="password" placeholder="Password" />
+            <button class="form-submit" >Sign In</button>
+        </form>
+    </div>
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>Welcome Back!</h1>
+                <p>Do you want to sign in please fill with your personal info</p>
+                <button class="ghost" id="signIn">Sign In</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+                <h1>Welcome customer</h1>
+                <p>Please enter your personal details if tou want to register your account</p>
+                <button class="ghost" id="signUp">Sign Up</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../functionform.js"></script>
+<script src="../validate/validate.js"></script>
+<script src="login.js"></script>
+</html>
