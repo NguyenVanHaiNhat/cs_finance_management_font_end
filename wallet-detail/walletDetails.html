@@ -30,15 +30,15 @@
             </a>
         </li>
         <li>
-            <a href="">
+            <a href="../wallet/wallet.html">
                 <i class='bx bxs-shopping-bag-alt' ></i>
                 <span class="text">Wallet</span>
             </a>
         </li>
         <li>
-            <a href="../wallet-detail/walletDetails.html">
+            <a href="">
                 <i class='bx bxs-doughnut-chart' ></i>
-                <span class="text">Analytics</span>
+                <span class="text">Wallet Details</span>
             </a>
         </li>
         <li>
@@ -111,7 +111,7 @@
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Add new wallet
             </button>
-<!--Create-->
+            <!--Create-->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -122,8 +122,12 @@
                         <div class="modal-body">
                             <form>
                                 <div>
-                                    <label>Wallet name : </label>
-                                    <input type="text" name="name_wallet" id="name_wallet"  placeholder="name wallet"/>
+                                    <label>Wallet</label>
+                                    <select id="wallet"></select>
+                                </div>
+                                <div>
+                                    <label>Deposit amount</label>
+                                    <input type="text" name="deposit_amount" id="deposit_amount" placeholder="deposit amount"/>
                                 </div>
                                 <div>
                                     <label>Note</label>
@@ -133,12 +137,12 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" onclick="createNewWallet()">Save changes</button>
+                            <button type="submit" class="btn btn-primary" onclick="createNewWalletDetails()">Save changes</button>
                         </div>
                     </div>
                 </div>
             </div>
-<!--Update-->
+            <!--Update-->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -167,7 +171,7 @@
                     </div>
                 </div>
             </div>
-<!--delete-->
+            <!--delete-->
             <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -188,29 +192,29 @@
             </div>
         </div>
 
-        			<ul class="box-info">
-        				<li>
-        					<i class='bx bxs-calendar-check' ></i>
-        					<span class="text">
+        <ul class="box-info">
+            <li>
+                <i class='bx bxs-calendar-check' ></i>
+                <span class="text">
         						<h3>1020</h3>
         						<p>New Order</p>
         					</span>
-        				</li>
-        				<li>
-        					<i class='bx bxs-group' ></i>
-        					<span class="text">
+            </li>
+            <li>
+                <i class='bx bxs-group' ></i>
+                <span class="text">
         						<h3>2834</h3>
         						<p>Visitors</p>
         					</span>
-        				</li>
-        				<li>
-        					<i class='bx bxs-dollar-circle' ></i>
-        					<span class="text">
+            </li>
+            <li>
+                <i class='bx bxs-dollar-circle' ></i>
+                <span class="text">
         						<h3>$2543</h3>
         						<p>Total Sales</p>
         					</span>
-        				</li>
-        			</ul>
+            </li>
+        </ul>
 
 
         <div class="table-data">
@@ -224,8 +228,10 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>name wallet</th>
-                        <th>note</th>
+                        <th>Name wallet</th>
+                        <th>Deposit amount</th>
+                        <th>Amount</th>
+                        <th>Note</th>
                         <th>Update</th>
                         <th>Delete</th>
                     </tr>
