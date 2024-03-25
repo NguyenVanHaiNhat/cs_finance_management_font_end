@@ -1,5 +1,4 @@
-const TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuaGF0IiwiaWF0IjoxNzExMzM3NTUxLCJleHAiOjE3MTEzNzM1NTF9.Yz9EFzEWcqHE-iXf0ZSqjgnpghs1uGuoFjD8G8Z6tzM"
-// $(document).ready(function () {
+const TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuaGF0IiwiaWF0IjoxNzExMzQ4OTMwLCJleHAiOjE3MTEzODQ5MzB9.my6CW330HRKGdXqNxin3mNtrAV2gkPAXf68D4kjQ7UM"
 getWallet();
     function showAllWallet() {
         let ob = getKeyLocalStorage();
@@ -37,13 +36,12 @@ getWallet();
     function getWalletDetails(walletdetails) {
         console.log(walletdetails);
         return `<tr>
-<td>${walletdetails.id}</td>
 <td>${walletdetails.wallet.name_wallet}</td>
 <td>${walletdetails.deposit_amount}</td>
 <td>${walletdetails.amount}</td>
 <td>${walletdetails.note}</td>
-<td><button type="button" class="btn btn-primary update-btn" data-wallet-id="${walletdetails.id}" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Update
+<td><button type="button" class="btn btn-primary update-btn" data-wallet= ${JSON.stringify(walletdetails.wallet)} data-walletdetails-id="${walletdetails.id}" data-deposit-value="${walletdetails.deposit_amount}" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Recharge
             </button></td>
 <td><button type="button" class="btn btn-primary delete-btn" data-wallet-id="${walletdetails.id}" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
                 Delete
@@ -101,9 +99,11 @@ function deleteWallet() {
 
     function updateWallet() {
         event.preventDefault();
-        let walletId = document.getElementById("updateWalletId").value; // Lấy ID của ví cần cập nhật
+        let walletId = document.getElementById("updateWalletId").value;// Lấy ID của ví cần cập nhật
+        let deposit = document.getElementById("depositValue").value;
         let updatedWallet = {
-            "name_wallet": document.getElementById("updateName").value,
+            "id_wallet" : document.getElementById("updateWalletId1").value,
+            "deposit_amount": document.getElementById("deposit_value").value + deposit,
             "note": document.getElementById("updateNote").value
         };
         console.log(JSON.stringify(updatedWallet));
@@ -151,10 +151,15 @@ function deleteWallet() {
 }
 document.addEventListener("click", function (event) {
     if (event.target.classList.contains("update-btn") || event.target.classList.contains("delete-btn")) {
-        let walletId = event.target.getAttribute("data-wallet-id");
-        console.log("Update wallet with ID:", walletId);
+        let wallet = event.target.getAttribute("data-wallet");
+        let walletDetailsId = event.target.getAttribute("data-walletdetails-id");
+        let deposit = event.target.getAttribute("data-deposit-value");
+        console.log(wallet);
+        console.log(walletDetailsId);
+        console.log(deposit)
         // Đặt giá trị của ID vào trường ẩn trong modal
-        document.getElementById("updateWalletId").value = walletId;
-        document.getElementById("DeleteWalletId").value = walletId;
+        document.getElementById("updateWalletId").value = walletDetailsId;
+        document.getElementById("updateWalletId1").value = wallet
+        document.getElementById("DeleteWalletId").value = walletDetailsId;
     }
 });

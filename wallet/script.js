@@ -1,4 +1,4 @@
-const TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuaGF0IiwiaWF0IjoxNzExMzM3NTUxLCJleHAiOjE3MTEzNzM1NTF9.Yz9EFzEWcqHE-iXf0ZSqjgnpghs1uGuoFjD8G8Z6tzM"
+const TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuaGF0IiwiaWF0IjoxNzExMzQ4OTMwLCJleHAiOjE3MTEzODQ5MzB9.my6CW330HRKGdXqNxin3mNtrAV2gkPAXf68D4kjQ7UM"
 function showAllWallet(){
     let ob = getKeyLocalStorage();
     if (ob != null){
@@ -32,7 +32,6 @@ showAllWallet();
 function getWallet(wallet){
     console.log(wallet);
     return `<tr>
-<td>${wallet.id}</td>
 <td>${wallet.name_wallet}</td>
 <td>${wallet.note}</td>
 <td><button type="button" class="btn btn-primary update-btn" data-wallet-id="${wallet.id}" data-bs-toggle="modal" data-bs-target="#staticBackdrop">

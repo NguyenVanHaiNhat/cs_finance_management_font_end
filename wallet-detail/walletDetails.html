@@ -38,7 +38,7 @@
         <li>
             <a href="">
                 <i class='bx bxs-doughnut-chart' ></i>
-                <span class="text">Wallet Details</span>
+                <span class="text">Wallet details</span>
             </a>
         </li>
         <li>
@@ -108,9 +108,9 @@
                     </li>
                 </ul>
             </div>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Add new wallet
-            </button>
+<!--            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">-->
+<!--                Add new wallet-->
+<!--            </button>-->
             <!--Create-->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -153,8 +153,8 @@
                         <div class="modal-body">
                             <form id="updateWalletForm">
                                 <div class="mb-3">
-                                    <label for="updateName" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="updateName" placeholder="Enter wallet name">
+                                    <label for="deposit_value" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="deposit_value" placeholder="Enter deposit">
                                 </div>
                                 <div class="mb-3">
                                     <label for="updateNote" class="form-label">Note</label>
@@ -162,6 +162,7 @@
                                 </div>
                                 <!-- Trường ẩn để lưu ID của ví -->
                                 <input type="hidden" id="updateWalletId">
+                                <input type="hidden" id="depositValue">
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -227,7 +228,6 @@
                 <table>
                     <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Name wallet</th>
                         <th>Deposit amount</th>
                         <th>Amount</th>
