@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Management</title>
+  <!-- Link to Bootstrap 5.1 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+  <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Create Category
+</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Form for adding a new category -->
+        <form id="addCategoryForm"></form>
+    <div class="mb-3">
+        <label for="updateCategoryName" class="form-label">Category Name</label>
+        <input type="text" class="form-control" id="categoryName" name="name_category" required>
+    </div>
+    <div class="mb-3">
+        <label for="categoryNote" class="form-label">Note</label>
+        <input type="text" class="form-control" id="categoryNote" name="note" required>
+    </div>
+  </form>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" onclick="submitCategoryForm()">Add Category</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+    <div class="container mt-5">
+      <!-- Form for updating a category -->
+      <h2>Update Category</h2>
+<form id="updateCategoryForm">
+  <input type="hidden" id="updateCategoryId">
+  <div class="mb-3">
+      <label for="updateCategoryName" class="form-label">Category Name</label>
+      <input type="text" class="form-control" id="updateCategoryName" name="name_category" required>
+  </div>
+  <div class="mb-3">
+      <label for="updateCategoryNote" class="form-label">Note</label>
+      <input type="text" class="form-control" id="updateCategoryNote" name="note" required>
+  </div>
+  <input type="hidden" class="form-control" id="updateCategoryUser" name="user" required>
+  <button type="submit" class="btn btn-primary" onclick="submitUpdateCategoryForm()">Update</button>
+</form>
+    </div>
+
+  <div class="container mt-5">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Category Name</th>
+          <th scope="col">Note</th>
+          <th scope="col">Username</th>
+          <th scope="col">Update</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody id="content">
+        <!-- Table content will be populated dynamically -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Link to jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script>
+    const TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkdW5nIiwiaWF0IjoxNzExMzMwMzMxLCJleHAiOjE3MTEzNjYzMzF9.o2qWmhIps1wJsZvrpxdGj3VlNnK-xiAUm6a9l-r6DdY";
+
+function showAllExpense() {
+  let ob = getKeyLocalStorage();
+  if (ob != null) {
+    let token = ob.token;
+  }
+  $.ajax({
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      "Authorization": "Bearer " + TOKEN
+    },
+    crossDomain: true,
+    type: "GET",
+    url: "http://localhost:8080/api/category",
+    success: function (data){
+        const arr = data.content;
+        content = "";
+        for (let i = 0; i < arr.length; i++) {
+            content+=getCategory(arr[i])
+        }
+        document.getElementById("content").innerHTML= content;
+    }
+  });
+}
+
+function getKeyLocalStorage() {
+  let a = JSON.parse(localStorage.getItem("object"));
+  return a;
+}
+
+function getCategory(category) {
+  return `<tr>
+            <td>${category.name_category}</td>
+            <td>${category.note}</td>
+            <td>${category.users.username}</td>
+            <td><button class="btn btn-primary btn-sm" onclick="getinfo(${category.id})">Update</button></td>
+            <td>
+              <button class="btn btn-danger btn-sm" onclick="deleteExpense(${category.id})">Delete</button>
+            </td>
+          </tr>`;
+}
+// thêm mới
+$(document).ready(function () {
+  showAllExpense();
+});
+
+function submitCategoryForm() {
+
+var category = {
+    name_category: $("#categoryName").val(),
+    note: $("#categoryNote").val()
+
+};
+
+$.ajax({
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer " + TOKEN
+    },
+    url: 'http://localhost:8080/api/category',
+    type: 'post',
+    contentType: 'application/json',
+    data: JSON.stringify(category),
+    success: function() {
+        alert('Category added successfully');
+        // Refresh the category list
+        showAllExpense();
+    }
+});
+}
+
+function submitUpdateCategoryForm() {
+    var category = {
+        id: $("#updateCategoryId").val(),
+        name_category: $("#updateCategoryName").val(),
+        note: $("#updateCategoryNote").val(),
+        users: {
+            id: $("#updateCategoryUser").val()
+        }
+    };
+
+    $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer " + TOKEN
+        },
+        url: `http://localhost:8080/api/category/${$("#updateCategoryId").val()}`,
+        type: 'put',
+        contentType: 'application/json',
+        data: JSON.stringify(category),
+        success: function() {
+            alert('Category updated successfully');
+            // Refresh the category list
+            showAllExpense();
+        }
+    });
+}
+
+function getinfo(id) {
+    $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer " + TOKEN
+        },
+        url: 'http://localhost:8080/api/category/' + id,
+        type: 'get',
+        success: function(category) {
+            $("#updateCategoryId").val(category.id);
+            $("#updateCategoryName").val(category.name_category);
+            $("#updateCategoryNote").val(category.note);
+            $("#updateCategoryUser").val(category.users.id);
+        }
+    });
+}
+
+
+// xoá category
+function deleteExpense(id) {
+$.ajax({
+   headers :{
+       'Accept': 'application/json',
+       'Content-Type': 'application/json',
+       "Authorization": "Bearer " + TOKEN
+   },
+   type: 'DELETE',
+   url: `http://localhost:8080/api/category/${id}`,
+   success: showAllExpense
+})
+}
+
+  </script>
+
+  <!-- Link to Bootstrap 5.1 JS (optional, only if you need JavaScript features of Bootstrap) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
