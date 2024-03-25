@@ -1,4 +1,4 @@
-const TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuaGF0IiwiaWF0IjoxNzExMzQ4OTMwLCJleHAiOjE3MTEzODQ5MzB9.my6CW330HRKGdXqNxin3mNtrAV2gkPAXf68D4kjQ7UM"
+const TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuaGF0IiwiaWF0IjoxNzExMzUxNzc3LCJleHAiOjE3MTEzODc3Nzd9.79_6WNxVQsL4h83oClnMrFuvFfjkgEjYTCUxDNW7fms"
 getWallet();
     function showAllWallet() {
         let ob = getKeyLocalStorage();
@@ -40,7 +40,7 @@ getWallet();
 <td>${walletdetails.deposit_amount}</td>
 <td>${walletdetails.amount}</td>
 <td>${walletdetails.note}</td>
-<td><button type="button" class="btn btn-primary update-btn" data-wallet= ${JSON.stringify(walletdetails.wallet)} data-walletdetails-id="${walletdetails.id}" data-deposit-value="${walletdetails.deposit_amount}" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+<td><button type="button" class="btn btn-primary update-btn" data-wallet=${JSON.stringify(walletdetails.wallet)} data-walletdetails-id="${walletdetails.id}" data-deposit-value="${walletdetails.deposit_amount}" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Recharge
             </button></td>
 <td><button type="button" class="btn btn-primary delete-btn" data-wallet-id="${walletdetails.id}" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
