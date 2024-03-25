@@ -1,26 +1,21 @@
-
-const TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaGFwIiwiaWF0IjoxNzExMzQwNzU3LCJleHAiOjE3MTEzNzY3NTd9.A6pgsd9mPLoVo1YWGk3lW1DrCBf3xWfJqXoCdHYgz4o"
-
 function showAllExpense(list){
     let ob = getKeyLocalStorage();
      if (ob != null){
      let token = ob.token;
-        
-   }
    if (list) {
     const arr = list.content;
             content = "";
             for (let i = 0; i < arr.length; i++) {
                 content+=getExpense(arr[i])
             }
-            document.getElementById("content").innerHTML= content;
+            document.getElementById("content1").innerHTML= content;
             calculateTotalAmount(list.content);
    } else {
     $.ajax({
         headers:{
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            "Authorization": "Bearer " + TOKEN
+            "Authorization": "Bearer " + token
         },
         crossDomain: true,
         type:"GET",
@@ -31,19 +26,20 @@ function showAllExpense(list){
             for (let i = 0; i < arr.length; i++) {
                 content+=getExpense(arr[i])
             }
-            document.getElementById("content").innerHTML= content;
+            document.getElementById("content1").innerHTML= content;
         }
     })
      
    }
 }
+}
 
 function calculateTotalAmount(expenseList){
     let totalAmount = 0;
     for (let i = 0; i < expenseList.length; i++) {
-        totalAmount += expenseList[i].amount; // Cộng giá trị amount từ mỗi chi phí vào tổng
+        totalAmount += expenseList[i].amount; 
     }
-    // Hiển thị tổng amount
+    
     document.getElementById("totalAmount").innerHTML = "Total amount: " + totalAmount;
 }
 
@@ -63,19 +59,14 @@ function getExpense(expense){
 <td>${expense.walletdetails.wallet.name_wallet}</td>
 <td>${expense.note}</td>
 <td>${expense.time_now}</td>
-<td>${expense.users.id}</td>
+<td>${expense.users.username}</td>
 <td><button data-bs-toggle="modal" data-bs-target="#myModal1" class="btn btn-primary btn-sm" onclick="getinfo(${expense.id})">Update</button></td>
 <td><button class="btn btn-danger btn-sm" class="deleteExpense" onclick="deleteExpense(${expense.id})">Delete</button></td>
 </tr>
 `
 }
-
-
-
-   
-
-
     $(document).ready(function () {
+        
         getOptions();
         getOptions1();
         
@@ -87,11 +78,14 @@ function getExpense(expense){
         
         
         function getOptions() {
+            let ob = getKeyLocalStorage();
+     if (ob != null){
+     let token = ob.token;
                 $.ajax({
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
-                        "Authorization": "Bearer " + TOKEN
+                        "Authorization": "Bearer " + token
                     },
                     type: "get",
                     url: "http://www.localhost:8080/api/category/list",
@@ -108,13 +102,17 @@ function getExpense(expense){
                     }
                 })
             }
+        }
 
             function getOptions1() {
+                let ob = getKeyLocalStorage();
+     if (ob != null){
+     let token = ob.token;
                 $.ajax({
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
-                        "Authorization": "Bearer " + TOKEN
+                        "Authorization": "Bearer " + token
                     },
                     type: "get",
                     url: "http://www.localhost:8080/api/category/list",
@@ -131,8 +129,12 @@ function getExpense(expense){
                     }
                 })
             }
+        }
 
         function getinfo(idExpense){
+            let ob = getKeyLocalStorage();
+     if (ob != null){
+     let token = ob.token;
             // chan su kien mac dinh
             event.preventDefault();
             // lay du lieu
@@ -148,7 +150,7 @@ function getExpense(expense){
                 headers :{
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    "Authorization": "Bearer " + TOKEN
+                    "Authorization": "Bearer " + token
                 },
                 type: "GET",
                 dataType: 'json',
@@ -163,13 +165,17 @@ function getExpense(expense){
                 }
             })
         }
+    }
     
     function walletdetailsOption() {
+        let ob = getKeyLocalStorage();
+     if (ob != null){
+     let token = ob.token;
         $.ajax({
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                "Authorization": "Bearer " + TOKEN
+                "Authorization": "Bearer " + token
             },
             type: "get",
             url: "http://www.localhost:8080/api/walletdetails/list",
@@ -185,13 +191,17 @@ function getExpense(expense){
             }
         })
     }
+}
 
     function walletdetailsOption1() {
+        let ob = getKeyLocalStorage();
+     if (ob != null){
+     let token = ob.token;
         $.ajax({
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                "Authorization": "Bearer " + TOKEN
+                "Authorization": "Bearer " + token
             },
             type: "get",
             url: "http://www.localhost:8080/api/walletdetails/list",
@@ -207,8 +217,12 @@ function getExpense(expense){
             }
         })
     }
+}
 
 function createNewExpense(){
+    let ob = getKeyLocalStorage();
+     if (ob != null){
+     let token = ob.token;
     // chan su kien mac dinh
     event.preventDefault();
     // lay du lieu
@@ -232,7 +246,7 @@ function createNewExpense(){
         headers :{
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            "Authorization": "Bearer " + TOKEN
+            "Authorization": "Bearer " + token
         },
         type: "POST",
         url: "http://localhost:8080/api/expense",
@@ -243,10 +257,14 @@ function createNewExpense(){
         }
     })
 }
+}
 
 
 
 function updateNewExpense(){
+    let ob = getKeyLocalStorage();
+     if (ob != null){
+     let token = ob.token;
     // chan su kien mac dinh
     event.preventDefault();
     // lay du lieu
@@ -267,7 +285,7 @@ function updateNewExpense(){
         headers :{
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            "Authorization": "Bearer " + TOKEN
+            "Authorization": "Bearer " + token
         },
         type: "PUT",
         url: "http://localhost:8080/api/expense",
@@ -278,37 +296,48 @@ function updateNewExpense(){
         }
     })
 }
+}
 
 function deleteExpense(id) {
-   
+    let ob = getKeyLocalStorage();
+    if (ob != null){
+    let token = ob.token;
     $.ajax({
         headers :{
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            "Authorization": "Bearer " + TOKEN
+            "Authorization": "Bearer " + token
         },
         type: 'DELETE',
         url: `http://localhost:8080/api/expense/${id}`,
         success: showAllExpense
     })
 }
+}
 
 function search(time_now) {
+    let ob = getKeyLocalStorage();
+     if (ob != null){
+     let token = ob.token;
     time_now = $('#gsearch').val();
     let urlSearchParams = "http://localhost:8080/api/expense/search/" + time_now;
     $.ajax({
         headers :{
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            "Authorization": "Bearer " + TOKEN
+            "Authorization": "Bearer " + token
         },
         type: 'GET',
         url: urlSearchParams,
         success: function(response){
             console.log({response});
             showAllExpense(response)
+           
         }
+        
        
     })
+}
     event.preventDefault()
 }
+
