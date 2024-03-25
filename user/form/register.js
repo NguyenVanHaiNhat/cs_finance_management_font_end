@@ -1,12 +1,7 @@
 
-$('#register').submit(function(event) {
-    event.preventDefault();
-   register();
-})
-
-function register(){
-    let username1 = document.getElementById("username").value;
-    let password1 = document.getElementById("password").value;
+function register1(){
+    let username1 = document.getElementById("username1").value;
+    let password1 = document.getElementById("password1").value;
     let first_name = document.getElementById("first_name").value;
     let last_name = document.getElementById("last_name").value;
     let gender = document.getElementById("gender").value;
@@ -22,23 +17,30 @@ function register(){
         "email": email,
         "age": age,
         "phone": phone,
+        "roles": [
+            {
+                "id": 2,
+                "name": "ROLE_USER"
+            }
+        ]
     }
 
     $.ajax({
         headers:{
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '
         },
-        crossDomain: true,
         type: "POST",
         data: JSON.stringify(users),
-        url:"http://localhost:8080/api/users",
+        url:"http://localhost:8080/api/users/create",
         success: function (data){
-            console.log("success")
-            window.location.href = "../../list.html"
+            console.log(data)
+            localStorage.setItem("object", JSON.stringify(data));
+            alert("Register completed")
         },
-        error: function (data){
-            window.location.href ="../register.html"
+        error: function (){
+            window.location.href ="signinandsignup.html"
         }
     })
 }

@@ -9,7 +9,7 @@
 <body>
 <div class="container" id="container">
     <div class="form-container sign-up-container">
-        <form onsubmit="return validateForm()" id="register">
+        <form>
             <h1>Create Account</h1>
             <div class="social-container">
                 <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -29,7 +29,7 @@
             <input id="email" type="email" placeholder="Email" required/>
             <input id="age" type="number" placeholder="Age" required/>
             <input id="phone" type="text" placeholder="Phone" required/>
-            <button type="submit">Sign Up</button>
+            <button class="form-submit" type="button" onclick="validateForm()">Sign Up</button>
         </form>
     </div>
     <div class="form-container sign-in-container">
@@ -42,7 +42,7 @@
             <span>or use your account</span>
             <input id="username" type="text" placeholder="Username" />
             <input id="password" type="password" placeholder="Password" />
-            <button class="form-submit" >Sign In</button>
+            <button class="form-submit">Sign In</button>
         </form>
     </div>
     <div class="overlay-container">
@@ -61,7 +61,8 @@
     </div>
 </div>
 </body>
-<script src="../functionform.js"></script>
-<script src="../validate/validate.js"></script>
+<script src="functionform.js"></script>
+<script src="validate/validate.js"></script>
 <script src="login.js"></script>
+<script src="register.js"></script>
 </html>

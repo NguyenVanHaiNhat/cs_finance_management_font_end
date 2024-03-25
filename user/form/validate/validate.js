@@ -23,7 +23,7 @@ function validateForm() {
         document.getElementById("firstname_error").innerText = "FirstName needs to be between 3 and 6 characters."; // Cập nhật thông báo lỗi
         return false;
     } else {
-        document.getElementById("first_name_error").innerText = "";
+        document.getElementById("firstname_error").innerText = "";
     }
 
     if (last_name.length < 3 || last_name.length > 6) {
@@ -32,5 +32,5 @@ function validateForm() {
     } else {
         document.getElementById("last_name_error").innerText = "";
     }
-    return true; // Nếu tất cả các điều kiện đều đúng, cho phép gửi biểu mẫu
+    register1();
 }

@@ -22,9 +22,10 @@ function login() {
         data: JSON.stringify(users),
         url: "http://localhost:8080/api/auth/login",
         success: function (data) {
+            console.log(data)
             // chuyển sang trang cá nhân của các tài khoản
             localStorage.setItem("object", JSON.stringify(data))
-            window.location.href = "../../../index.html";
+            window.location.href = "info.html";
         },
         error: function (data){
             window.location.href ="signinandsignup.html";
