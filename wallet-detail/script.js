@@ -1,15 +1,14 @@
-const TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuaGF0IiwiaWF0IjoxNzExMzUxNzc3LCJleHAiOjE3MTEzODc3Nzd9.79_6WNxVQsL4h83oClnMrFuvFfjkgEjYTCUxDNW7fms"
 getWallet();
     function showAllWallet() {
         let ob = getKeyLocalStorage();
         if (ob != null) {
             let token = ob.token;
-        }
+
         $.ajax({
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                "Authorization": "Bearer " + TOKEN
+                "Authorization": "Bearer " + token
             },
             crossDomain: true,
             type: "GET",
@@ -23,6 +22,7 @@ getWallet();
                 document.getElementById("content1").innerHTML = content;
             }
         })
+        }
     }
 
     function getKeyLocalStorage() {

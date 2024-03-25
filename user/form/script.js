@@ -1,27 +1,26 @@
-const TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuaGF0IiwiaWF0IjoxNzExMzUxNzc3LCJleHAiOjE3MTEzODc3Nzd9.79_6WNxVQsL4h83oClnMrFuvFfjkgEjYTCUxDNW7fms"
 function showAllWallet(){
-    let ob = getKeyLocalStorage();
-    if (ob != null){
-        let token = ob.token;
-    }
-    $.ajax({
-        headers:{
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            "Authorization": "Bearer " + TOKEN
-        },
-        crossDomain: true,
-        type:"GET",
-        url: "http://localhost:8080/api/wallets",
-        success: function (data){
-            const arr = data.content;
-            content = "";
-            for (let i = 0; i < arr.length; i++) {
-                content+=getWallet(arr[i])
+    let object = getKeyLocalStorage();
+    if (object != null) {
+        let token = object.token;
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + token
+            },
+            crossDomain: true,
+            type: "GET",
+            url: "http://localhost:8080/api/wallets",
+            success: function (data) {
+                const arr = data.content;
+                content = "";
+                for (let i = 0; i < arr.length; i++) {
+                    content += getWallet(arr[i])
+                }
+                document.getElementById("content1").innerHTML = content;
             }
-            document.getElementById("content1").innerHTML= content;
-        }
-    })
+        })
+    }
 }
 function getKeyLocalStorage(){
     let a = JSON.parse(localStorage.getItem("object"));
@@ -45,25 +44,28 @@ function getWallet(wallet){
 }
 function createNewWallet(){
     event.preventDefault();
-    let newWallet = {
-        "name_wallet": document.getElementById("name_wallet").value,
-        "note":  document.getElementById("note").value,
-    }
-    console.log(JSON.stringify(newWallet));
-    $.ajax({
-        headers :{
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            "Authorization": "Bearer " + TOKEN
-        },
-        type: "POST",
-        url: "http://localhost:8080/api/wallets",
-        data: JSON.stringify(newWallet),
-        success: function(){
-            console.log("abc")
-            showAllWallet();
+    if (object != null) {
+        let token = object.token;
+        let newWallet = {
+            "name_wallet": document.getElementById("name_wallet").value,
+            "note": document.getElementById("note").value,
         }
-    })
+        console.log(JSON.stringify(newWallet));
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + token
+            },
+            type: "POST",
+            url: "http://localhost:8080/api/wallets",
+            data: JSON.stringify(newWallet),
+            success: function () {
+                console.log("abc")
+                showAllWallet();
+            }
+        })
+    }
 }
 
 function deleteWallet() {
@@ -112,11 +114,11 @@ function updateWallet() {
         type: "PUT",
         url: "http://localhost:8080/api/wallets/" + walletId, // Sử dụng ID để xác định ví cần cập nhật
         data: JSON.stringify(updatedWallet),
-        success: function() {
+        success: function () {
             console.log("Wallet updated successfully");
             showAllWallet();
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error("Error updating wallet:", error);
         }
     });
