@@ -12,6 +12,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="expense.js"></script>
+
 <style>
     table {
         width: 100%;
@@ -35,11 +36,22 @@
 </style>
 </head>
 <body>
+  
+
+<div style="float: right; margin-right: 30px; margin-top: 50px;" >
+<form style="margin-top: 100 px;">
+  <label for="gsearch"></label>
+  <input type="search" id="gsearch" name="time_now">
+  <input type="button" onclick="search()" value="search">
+</form>
+</div>
+
+<div id="totalAmount" style="float: right; clear: both; margin-right: 30px;" ></div>  
 
     <div class="container mt-3">
         
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-          Create new Expense
+          Create Expense
         </button>
       </div>
       
@@ -50,36 +62,37 @@
       
             <!-- Modal Header -->
             <div class="modal-header">
-              <h4 class="modal-title">Modal Heading</h4>
+              <h4 class="modal-title">List Create</h4>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
       
             <!-- Modal body -->
             <div class="modal-body">
               <form>
-              <div>
-                  <label>Amount</label>
-                  <input type="text" name="amount" id="amount"  placeholder=""/>
+              <div class="mb-3">
+                  <label class="form-label" for="amount">Amount</label>
+                  <input type="text" class="form-control" name="amount" id="amount"  placeholder=""/>
               </div>
-              <div>
-                  <label>category</label>
-                 <select id="category"></select>
+              <div class="mb-3">
+                  <label class="form-label" for="category">category</label>
+                 <select class="form-control" id="category"></select>
               </div>
-              <div>
-                  <label>walletDetails</label>
-                 <select id="walletdetails"></select>
+              <div class="mb-3">
+                  <label class="form-label" for="walletdetails">walletDetails</label>
+                 <select class="form-control" id="walletdetails"></select>
               </div>
-              <div>
-                  <label>Note</label>
-                  <input type="text" name="note" id="note" placeholder=""/>
+              <div class="mb-3">
+                  <label class="form-label" for="note">Note</label>
+                  <input type="text" class="form-control" name="note" id="note" placeholder=""/>
               </div>
-              <button type="submit" value="create" onclick="createNewExpense()">create</button>
+            
           </form>
             </div>
       
             <!-- Modal footer -->
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              <button class="btn btn-primary btn-sm"  type="submit" value="create" onclick="createNewExpense()">Create</button>
             </div>
       
           </div>
@@ -102,35 +115,35 @@
       
             <!-- Modal Header -->
             <div class="modal-header">
-              <h4 class="modal-title">Modal Heading</h4>
+              <h4 class="modal-title">List update</h4>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
       
             <!-- Modal body -->
             <div class="modal-body">
               <form class="updateNewExpense">
-                <div>
-                    <label>Id</label>
-                    <input type="text" name="id" id="id1"  />
+                <div class="mb-3">
+                    <label class="form-label" for="id1">Id</label>
+                    <input type="text" class="form-control" name="id" id="id1"  />
                 </div>
-                <div>
-                    <label>Amount</label>
-                    <input type="text" name="amount" id="amount1"  />
+                <div class="mb-3">
+                    <label class="form-label" for="amount1">Amount</label>
+                    <input type="text" class="form-control" name="amount" id="amount1"  />
                 </div>
-                <div>
-                    <label>category</label>
-                   <select id="category1"></select>
+                <div class="mb-3">
+                    <label class="form-label" for="category1">category</label>
+                   <select id="category1" class="form-control"></select>
                     
+                </div >
+                <div class="mb-3">
+                    <label class="form-label" for="walletdetails1">walletDetails</label>
+                   <select id="walletdetails1" class="form-control"></select>
                 </div>
-                <div>
-                    <label>walletDetails</label>
-                   <select id="walletdetails1"></select>
+                <div class="mb-3">
+                    <label class="form-label" for="note1">Note</label>
+                    <input type="text" class="form-control" name="note" id="note1" />
                 </div>
-                <div>
-                    <label>Note</label>
-                    <input type="text" name="note" id="note1" />
-                </div>
-                <button type="submit" value="update" onclick="updateNewExpense()">update</button>
+                
                 </form>
         
             </div>
@@ -138,6 +151,7 @@
             <!-- Modal footer -->
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              <button class="btn btn-primary btn-sm"  type="submit" value="update" onclick="updateNewExpense()">Update</button>
             </div>
       
           </div>
@@ -149,9 +163,9 @@
 
        
 
-<h2>Table expense</Table></h2>
 
-<table>
+
+<table style="margin-top: 50px;">
     <thead>
         <tr>
             <th>ID</th>

@@ -1,12 +1,21 @@
 
-const TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaGFwIiwiaWF0IjoxNzExMTk0MTU2LCJleHAiOjE3MTEyMzAxNTZ9.DgQBya3ks1QzI3W9CqydIsbx8jys_ZUxUTZNl80fAto"
+const TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaGFwIiwiaWF0IjoxNzExMzQwNzU3LCJleHAiOjE3MTEzNzY3NTd9.A6pgsd9mPLoVo1YWGk3lW1DrCBf3xWfJqXoCdHYgz4o"
 
-function showAllExpense(){
+function showAllExpense(list){
     let ob = getKeyLocalStorage();
      if (ob != null){
      let token = ob.token;
         
    }
+   if (list) {
+    const arr = list.content;
+            content = "";
+            for (let i = 0; i < arr.length; i++) {
+                content+=getExpense(arr[i])
+            }
+            document.getElementById("content").innerHTML= content;
+            calculateTotalAmount(list.content);
+   } else {
     $.ajax({
         headers:{
             'Accept': 'application/json',
@@ -25,9 +34,18 @@ function showAllExpense(){
             document.getElementById("content").innerHTML= content;
         }
     })
+     
+   }
 }
 
-
+function calculateTotalAmount(expenseList){
+    let totalAmount = 0;
+    for (let i = 0; i < expenseList.length; i++) {
+        totalAmount += expenseList[i].amount; // Cộng giá trị amount từ mỗi chi phí vào tổng
+    }
+    // Hiển thị tổng amount
+    document.getElementById("totalAmount").innerHTML = "Total amount: " + totalAmount;
+}
 
 function getKeyLocalStorage(){
   let a = JSON.parse(localStorage.getItem("object"));
@@ -46,8 +64,8 @@ function getExpense(expense){
 <td>${expense.note}</td>
 <td>${expense.time_now}</td>
 <td>${expense.users.id}</td>
-<td><button class="updateNewExpense" onclick="getinfo(${expense.id})">Update</button></td>
-<td><button class="deleteExpense" onclick="deleteExpense(${expense.id})">Delete</button></td>
+<td><button data-bs-toggle="modal" data-bs-target="#myModal1" class="btn btn-primary btn-sm" onclick="getinfo(${expense.id})">Update</button></td>
+<td><button class="btn btn-danger btn-sm" class="deleteExpense" onclick="deleteExpense(${expense.id})">Delete</button></td>
 </tr>
 `
 }
@@ -275,3 +293,22 @@ function deleteExpense(id) {
     })
 }
 
+function search(time_now) {
+    time_now = $('#gsearch').val();
+    let urlSearchParams = "http://localhost:8080/api/expense/search/" + time_now;
+    $.ajax({
+        headers :{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer " + TOKEN
+        },
+        type: 'GET',
+        url: urlSearchParams,
+        success: function(response){
+            console.log({response});
+            showAllExpense(response)
+        }
+       
+    })
+    event.preventDefault()
+}
