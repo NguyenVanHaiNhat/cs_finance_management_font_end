@@ -24,7 +24,7 @@ function changePassword() {
         success: function (data) {
             // chuyển sang trang cá nhân của các tài khoản
             localStorage.setItem("object", JSON.stringify(data))
-            window.location.href = "../../../index.html";
+            window.location.href = "../form/index.html";
         },
         error: function (data){
             window.location.href ="signinandsignup.html";
