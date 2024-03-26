@@ -3,7 +3,6 @@ getWallet();
         let ob = getKeyLocalStorage();
         if (ob != null) {
             let token = ob.token;
-
         $.ajax({
             headers: {
                 'Accept': 'application/json',
@@ -127,27 +126,30 @@ function deleteWallet() {
     }
 
     function getWallet() {
-        $.ajax({
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                "Authorization": "Bearer " + TOKEN
-            },
-            type: "get",
-            url:"http://localhost:8080/api/wallets/listWallet",
-            success: function (wallets) {
-                console.log(wallets);
-                let select = document.getElementById("wallet");
-                let option;
-                for (let wallet of wallets) {
-                    option = document.createElement("option");
-                    option.text = wallet.name_wallet;
-                    option.value = wallet.id;
-                    select.appendChild(option)
+        let object = getKeyLocalStorage();
+        if (object != null) {
+            let token = object.token;
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + token
+                },
+                type: "get",
+                url: "http://localhost:8080/api/wallets/listWallet",
+                success: function (wallets) {
+                    console.log(wallets);
+                    let select = document.getElementById("wallet");
+                    let option;
+                    for (let wallet of wallets) {
+                        option = document.createElement("option");
+                        option.text = wallet.name_wallet;
+                        option.value = wallet.id;
+                        select.appendChild(option)
+                    }
                 }
-            }
-        })
-
+            })
+        }
 }
 document.addEventListener("click", function (event) {
     if (event.target.classList.contains("update-btn") || event.target.classList.contains("delete-btn")) {

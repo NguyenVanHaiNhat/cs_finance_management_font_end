@@ -43,6 +43,7 @@ function getWallet(wallet){
 `
 }
 function createNewWallet(){
+    let object = getKeyLocalStorage();
     event.preventDefault();
     if (object != null) {
         let token = object.token;
@@ -69,23 +70,27 @@ function createNewWallet(){
 }
 
 function deleteWallet() {
-    let walletId = document.getElementById("updateWalletId").value; // Lấy ID của ví cần cập nhật
-    $.ajax({
+    let object = getKeyLocalStorage();
+    if (object != null) {
+        let token = object.token;
+        let walletId = document.getElementById("updateWalletId").value; // Lấy ID của ví cần cập nhật
+        $.ajax({
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                "Authorization": "Bearer " + TOKEN
+                "Authorization": "Bearer " + token
             },
             type: "DELETE",
             url: "http://localhost:8080/api/wallets/" + walletId,
-            success: function() {
+            success: function () {
                 console.log("Wallet deleted successfully");
                 showAllWallet();
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error("Error deleting wallet:", error);
             }
         });
+    }
 }
 document.addEventListener("click", function(event) {
     if (event.target.classList.contains("update-btn") || event.target.classList.contains("delete-btn")) {
@@ -99,27 +104,31 @@ document.addEventListener("click", function(event) {
 
 function updateWallet() {
     event.preventDefault();
-    let walletId = document.getElementById("updateWalletId").value; // Lấy ID của ví cần cập nhật
-    let updatedWallet = {
-        "name_wallet": document.getElementById("updateName").value,
-        "note": document.getElementById("updateNote").value
-    };
-    console.log(JSON.stringify(updatedWallet));
-    $.ajax({
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            "Authorization": "Bearer " + TOKEN
-        },
-        type: "PUT",
-        url: "http://localhost:8080/api/wallets/" + walletId, // Sử dụng ID để xác định ví cần cập nhật
-        data: JSON.stringify(updatedWallet),
-        success: function () {
-            console.log("Wallet updated successfully");
-            showAllWallet();
-        },
-        error: function (xhr, status, error) {
-            console.error("Error updating wallet:", error);
-        }
-    });
+    let object = getKeyLocalStorage();
+    if (object != null) {
+        let token = object.token;
+        let walletId = document.getElementById("updateWalletId").value; // Lấy ID của ví cần cập nhật
+        let updatedWallet = {
+            "name_wallet": document.getElementById("updateName").value,
+            "note": document.getElementById("updateNote").value
+        };
+        console.log(JSON.stringify(updatedWallet));
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + token
+            },
+            type: "PUT",
+            url: "http://localhost:8080/api/wallets/" + walletId, // Sử dụng ID để xác định ví cần cập nhật
+            data: JSON.stringify(updatedWallet),
+            success: function () {
+                console.log("Wallet updated successfully");
+                showAllWallet();
+            },
+            error: function (xhr, status, error) {
+                console.error("Error updating wallet:", error);
+            }
+        });
+    }
 }
