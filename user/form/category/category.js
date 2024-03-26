@@ -1,4 +1,3 @@
-const TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuaGF0IiwiaWF0IjoxNzExMzUxNzc3LCJleHAiOjE3MTEzODc3Nzd9.79_6WNxVQsL4h83oClnMrFuvFfjkgEjYTCUxDNW7fms";
 
 function showAllCategory() {
     let ob = getKeyLocalStorage();
@@ -9,7 +8,7 @@ function showAllCategory() {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            "Authorization": "Bearer " + TOKEN
+            "Authorization": "Bearer " + token
         },
         crossDomain: true,
         type: "GET",
@@ -58,7 +57,7 @@ function submitCategoryForm() {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            "Authorization": "Bearer " + TOKEN
+            "Authorization": "Bearer " + token
         },
         url: 'http://localhost:8080/api/category',
         type: 'post',
@@ -86,7 +85,7 @@ function submitUpdateCategoryForm() {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            "Authorization": "Bearer " + TOKEN
+            "Authorization": "Bearer " + token
         },
         url: `http://localhost:8080/api/category/${$("#updateCategoryId").val()}`,
         type: 'put',
@@ -105,7 +104,7 @@ function getinfo(id) {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            "Authorization": "Bearer " + TOKEN
+            "Authorization": "Bearer " + token
         },
         url: 'http://localhost:8080/api/category/' + id,
         type: 'get',
@@ -125,7 +124,7 @@ function deleteExpense(id) {
         headers :{
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            "Authorization": "Bearer " + TOKEN
+            "Authorization": "Bearer " + token
         },
         type: 'DELETE',
         url: `http://localhost:8080/api/category/${id}`,
