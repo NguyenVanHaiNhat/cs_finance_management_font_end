@@ -12,8 +12,9 @@
     <!-- My CSS -->
     <link rel="stylesheet" href="../../style.css">
     <title>AdminHub</title>
-    <script src="../../script.js"></script>
-    <script src="script.js"></script>
+	<script src="../../script.js"></script>
+    <script src="expense.js"></script>
+  
 </head>
 <body>
 <!-- SIDEBAR -->
@@ -42,9 +43,9 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="">
                 <i class='bx bxs-message-dots' ></i>
-                <span class="text">Message</span>
+                <span class="text">Expense</span>
             </a>
         </li>
         <li>
@@ -78,21 +79,16 @@
     <!-- NAVBAR -->
     <nav>
         <i class='bx bx-menu' ></i>
-        <a href="#" class="nav-link">Wallet Management</a>
+        <a href="#" class="nav-link">Expense Management</a>
+
         <form action="#">
             <div class="form-input">
-                <input type="search" placeholder="Search...">
-                <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+				
+                <input type="search" id="gsearch" name="time_now">
+                <button type="submit" onclick="search()" value="search" class="search-btn"><i class='bx bx-search' ></i></button>
             </div>
         </form>
-
-//////
-        <div class="form-input">
-            <label for="gsearch"></label>
-            <input type="search" id="gsearch" name="time_now">
-            <button type="submit" onclick="search()" value="search" class="search-btn"><i class='bx bx-search' ></i></button>
-        </div>
-/////
+		
         <input type="checkbox" id="switch-mode" hidden>
         <label for="switch-mode" class="switch-mode"></label>
         <a href="#" class="notification">
@@ -117,64 +113,94 @@
                 </ul>
             </div>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Add new wallet
+                Add new expense
             </button>
 <!--Create-->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Form create</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form>
-                                <div>
-                                    <label>Wallet name : </label>
-                                    <input type="text" name="name_wallet" id="name_wallet"  placeholder="name wallet"/>
-                                </div>
-                                <div>
-                                    <label>Note</label>
-                                    <input type="text" name="note" id="note" placeholder="note"/>
-                                </div>
-                            </form>
-                        </div>
+							<form>
+							<div class="mb-3">
+								<label class="form-label" for="amount">Amount</label>
+								<input type="text" class="form-control" name="amount" id="amount"  placeholder=""/>
+							</div>
+							<div class="mb-3">
+								<label class="form-label" for="category">category</label>
+							   <select class="form-control" id="category"></select>
+							</div>
+							<div class="mb-3">
+								<label class="form-label" for="walletdetails">walletDetails</label>
+							   <select class="form-control" id="walletdetails"></select>
+							</div>
+							<div class="mb-3">
+								<label class="form-label" for="note">Note</label>
+								<input type="text" class="form-control" name="note" id="note" placeholder=""/>
+							</div>
+						  
+						</form>
+						  </div>
+					
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" onclick="createNewWallet()">Save changes</button>
+                            <button type="button" class="btn btn-primary" onclick="createNewExpense()">Save changes</button>
                         </div>
                     </div>
                 </div>
             </div>
 <!--Update-->
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="updateWalletForm">
-                                <div class="mb-3">
-                                    <label for="updateName" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="updateName" placeholder="Enter wallet name">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="updateNote" class="form-label">Note</label>
-                                    <input type="text" class="form-control" id="updateNote" placeholder="Enter note">
-                                </div>
-                                <!-- Trường ẩn để lưu ID của ví -->
-                                <input type="hidden" id="updateWalletId">
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" onclick="updateWallet()">Update</button>
-                        </div>
-                    </div>
-                </div>
+           <div class="modal fade" id="myModal1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">List update</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body">
+              <form class="updateNewExpense">
+                <div class="mb-3">
+                    <label class="form-label" for="id1">Id</label>
+                    <input type="text" class="form-control" name="id" id="id1"  />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="amount1">Amount</label>
+                    <input type="text" class="form-control" name="amount" id="amount1"  />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="category1">category</label>
+                   <select id="category1" class="form-control"></select>
+                    
+                </div >
+                <div class="mb-3">
+                    <label class="form-label" for="walletdetails1">walletDetails</label>
+                   <select id="walletdetails1" class="form-control"></select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="note1">Note</label>
+                    <input type="text" class="form-control" name="note" id="note1" />
+                </div>
+                
+                </form>
+        
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              <button class="btn btn-primary btn-sm"  type="submit" value="update" onclick="updateNewExpense()">Update</button>
+            </div>
+      
+          </div>
+        </div>
+      </div>
 <!--delete-->
             <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -189,7 +215,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" onclick="deleteWallet()">Yes</button>
+                            <button type="submit" class="btn btn-primary" onclick="deleteExpense()">Yes</button>
                         </div>
                     </div>
                 </div>
@@ -200,8 +226,7 @@
         				<li>
         					<i class='bx bxs-calendar-check' ></i>
         					<span class="text">
-        						<h3>1020</h3>
-        						<p>New Order</p>
+        						<h3 id="totalAmount"></h3>
         					</span>
         				</li>
         				<li>
@@ -224,17 +249,23 @@
         <div class="table-data">
             <div class="order">
                 <div class="head">
-                    <h3>Wallet List</h3>
+                    <h3>Expense  List</h3>
                     <i class='bx bx-search' ></i>
                     <i class='bx bx-filter' ></i>
                 </div>
                 <table>
                     <thead>
                     <tr>
-                        <th>name wallet</th>
-                        <th>note</th>
-                        <th>Update</th>
-                        <th>Delete</th>
+						<th>ID</th>
+						<th>Amount</th>
+						<th>Category</th>
+						<th>WalletDetails</th>
+						<th>Note</th>
+						<th>Time now</th>
+						<th>User</th>
+						<th>Update</th>
+						<th>Delete</th>
+						
                     </tr>
                     </thead>
                     <tbody id="content1">
@@ -248,6 +279,6 @@
 <!-- CONTENT -->
 
 
-<script src="script.js"></script>
+<script src="expense.js"></script>
 </body>
 </html>
