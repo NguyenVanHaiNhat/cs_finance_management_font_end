@@ -19,15 +19,15 @@ function validateForm() {
         document.getElementById("password_error").innerText = "";
     }
 
-    if (first_name.length < 3 || first_name.length > 6) {
-        document.getElementById("firstname_error").innerText = "FirstName needs to be between 3 and 6 characters."; // Cập nhật thông báo lỗi
+    if (first_name.length < 1 || first_name.length > 6) {
+        document.getElementById("firstname_error").innerText = "FirstName needs to be between 1 and 6 characters."; // Cập nhật thông báo lỗi
         return false;
     } else {
         document.getElementById("firstname_error").innerText = "";
     }
 
-    if (last_name.length < 3 || last_name.length > 6) {
-        document.getElementById("last_name_error").innerText = "LastName needs to be between 3 and 6 characters."; // Cập nhật thông báo lỗi
+    if (last_name.length < 1 || last_name.length > 6) {
+        document.getElementById("last_name_error").innerText = "LastName needs to be between 1 and 6 characters."; // Cập nhật thông báo lỗi
         return false;
     } else {
         document.getElementById("last_name_error").innerText = "";
