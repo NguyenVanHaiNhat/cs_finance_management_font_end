@@ -24,7 +24,7 @@ function showList() {
         })
     }
     else {
-        window.location.href = "../../wallet.html"
+        window.location.href = "index.html"
     }
 
 }
